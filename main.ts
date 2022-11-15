@@ -1,4 +1,4 @@
-import { cheerio } from 'https://deno.land/x/cheerio@1.0.6/mod.ts';
+import * as cheerio from 'npm:cheerio';
 
 const response = await fetch('https://quotes.toscrape.com/');
 const html = await response.text();
@@ -10,7 +10,7 @@ const encoder = new TextEncoder();
 
 await quotesFile.write(encoder.encode('quote|author|tags\n'));
 
-$('.quote').each((idx, el) => {
+$('.quote').each((_idx, el) => {
   const text = $(el)
     .find('span.text')
     .text()
@@ -19,10 +19,10 @@ $('.quote').each((idx, el) => {
   console.log(text);
 
   const author = $(el).find('span small.author').text();
-  const tags = [];
+  const tags: string[] = [];
   $(el)
     .find('div.tags a.tag')
-    .each((idx, el) => {
+    .each((_idx, el) => {
       tags.push($(el).text());
     });
 
